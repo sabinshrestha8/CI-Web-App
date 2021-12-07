@@ -28,12 +28,16 @@
                     <div class="alert alert-success"> <?php echo $this->session->flashdata('success'); ?> </div>
                 <?php } ?>
 
+                <?php if ($this->session->flashdata('error') != "") { ?>
+                    <div class="alert alert-danger"> <?php echo $this->session->flashdata('error'); ?> </div>
+                <?php } ?>
+
                 <div class="card">
                     <div class="card-header">
                         <div class="card-title">
                             <form action="" id="searchFrm" name="searchFrm" method="get">
                                 <div class="input-group mb-0">
-                                    <input type="text" value="" class="form-control" placeholder="Search" name="q">
+                                    <input type="text" value="<?php echo $queryString; ?>" class="form-control" placeholder="Search" name="q">
                                     <div class="input-group-append">
                                         <button class="input-group-text" id="basic-addon1">
                                             <i class="fas fa-search"></i>
@@ -57,25 +61,25 @@
                                 <th width="160">Action</th>
                             </tr>
 
-                            
+
                             <?php if (!empty($categories)) { ?>
                                 <?php foreach ($categories as $category) { ?>
                                     <tr>
-                                         <td><?php echo $category['id']; ?></td>
-                                            <td><?php echo $category['name']; ?></td>
-                                            <td>
+                                        <td><?php echo $category['id']; ?></td>
+                                        <td><?php echo $category['name']; ?></td>
+                                        <td>
 
-                                                <?php if ($category['status'] == 1) { ?>
-                                                    <span class="badge badge-success">Active</span>
-                                                <?php } else { ?>
-                                                    <span class="badge badge-danger">Block</span>
-                                                <?php } ?>
+                                            <?php if ($category['status'] == 1) { ?>
+                                                <span class="badge badge-success">Active</span>
+                                            <?php } else { ?>
+                                                <span class="badge badge-danger">Block</span>
+                                            <?php } ?>
 
-                                            </td>
-                                            <td>
-                                                <a href="" class="btn btn-primary btn-sm"><i class="far fa-edit"></i> Edit</a>
-                                                <a href="" class="btn btn-danger btn-sm"><i class="far fa-trash-alt"></i> Delete</a>
-                                            </td>
+                                        </td>
+                                        <td>
+                                            <a href="<?php echo base_url() . 'admin/category/edit/' . $category['id']; ?>" class="btn btn-primary btn-sm"><i class="far fa-edit"></i> Edit</a>
+                                            <a href="javascript:void(0);" onclick="deleteCategory(<?php echo $category['id'];?>)" class="btn btn-danger btn-sm"><i class="far fa-trash-alt"></i> Delete</a>
+                                        </td>
                                     </tr>
                                 <?php } ?>
                             <?php } else { ?>
@@ -100,3 +104,11 @@
 <!-- /.content-wrapper -->
 
 <?php $this->load->view('admin/footer'); ?>
+<script>
+    function deleteCategory(id) {
+        // alert(id);
+        if (confirm("Are you sure you want to delete category?")) {
+            window.location.href='<?php echo base_url().'admin/category/delete/';?>'+id;
+        }
+    }
+</script>
