@@ -1,7 +1,8 @@
 <?php
-    function resizeImage($source_path, $new_path, $width, $height) {
-    
-    $CI =& get_instance();
+function resizeImage($source_path, $new_path, $width, $height)
+{
+
+    $CI = &get_instance();
 
     $config['image_library'] = 'gd2';
     $config['source_image'] = $source_path;
@@ -14,8 +15,7 @@
 
     $CI->load->library('image_lib', $config);
 
+    $CI->image_lib->initialize($config);
     $CI->image_lib->resize();
     $CI->image_lib->clear();
-
-    }
-?>
+}
